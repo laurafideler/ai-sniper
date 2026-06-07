@@ -1,10 +1,16 @@
-require("dotenv").config(); // Allows local testing via .env file
+require("dotenv").config({ path: ".env.local" }); // Load from .env.local file
 const { createClient } = require("@supabase/supabase-js");
 const { chromium } = require("playwright");
+const ws = require("ws");
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY,
+  {
+    realtime: {
+      transport: ws,
+    },
+  },
 );
 
 // Helper function to build target URLs
