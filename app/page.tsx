@@ -7,24 +7,35 @@ import {
   MapPin,
   DollarSign,
   ExternalLink,
-  Check,
   X,
 } from "lucide-react";
 
+interface Radar {
+  id: number;
+  keyword: string;
+  zip: string;
+  radius: number;
+  max_bid: number;
+}
+
+interface Match {
+  id: string;
+  title: string;
+  current_bid: number;
+  end_time: string;
+  link: string;
+  thumbnail: string;
+  radar: string;
+}
+
 export default function Dashboard() {
   // UI States
-  const [radars, setRadars] = useState([]);
-  const [matches, setMatches] = useState([]);
+  const [radars, setRadars] = useState<Radar[]>([]);
+  const [matches, setMatches] = useState<Match[]>([]);
   const [keyword, setKeyword] = useState("");
   const [zip, setZip] = useState("");
   const [radius, setRadius] = useState("25");
   const [maxBid, setMaxBid] = useState("20");
-
-  // Fetch your custom criteria and data links on load
-  useEffect(() => {
-    // In production, these would fetch from your Next.js local /api routes
-    initSampleData();
-  }, []);
 
   const initSampleData = () => {
     setRadars([
@@ -55,10 +66,16 @@ export default function Dashboard() {
     ]);
   };
 
+  // Fetch your custom criteria and data links on load
+  useEffect(() => {
+    // In production, these would fetch from your Next.js local /api routes
+    initSampleData();
+  }, []);
+
   const handleAddRadar = (e: React.FormEvent) => {
     e.preventDefault();
     if (!keyword || !zip) return;
-    const newRadar = {
+    const newRadar: Radar = {
       id: Date.now(),
       keyword,
       zip,
@@ -159,7 +176,7 @@ export default function Dashboard() {
               Active Radars ({radars.length})
             </h3>
             <div className="space-y-2">
-              {radars.map((r: any) => (
+              {radars.map((r: Radar) => (
                 <div
                   key={r.id}
                   className="bg-slate-900 border border-slate-700 p-3 rounded-lg flex justify-between items-center"
@@ -190,7 +207,7 @@ export default function Dashboard() {
             🎯 Target Snipe Queue ({matches.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {matches.map((item: any) => (
+            {matches.map((item: Match) => (
               <div
                 key={item.id}
                 className="bg-slate-800/60 border border-slate-700 rounded-xl overflow-hidden shadow-lg flex flex-col justify-between"
