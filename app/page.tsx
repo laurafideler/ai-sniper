@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 import {
   Trash2,
   Radio,
-  Bell,
+  Bird,
   MapPin,
   DollarSign,
   ExternalLink,
 } from "lucide-react";
 
 export default function Dashboard() {
-  // UI States loaded dynamically from Supabase
+  // UI States loaded dynamically from Supabas
   const [radars, setRadars] = useState<any[]>([]);
   const [matches, setMatches] = useState<any[]>([]);
 
@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [zip, setZip] = useState("");
   const [radius, setRadius] = useState("25");
   const [maxBid, setMaxBid] = useState("20");
+  const [shippingAvailable, setShippingAvailable] = useState(true);
   const [loading, setLoading] = useState(false);
 
   // 1. Fetch Radars and Matches from the backend when page boots up
@@ -53,6 +54,7 @@ export default function Dashboard() {
       zip,
       radius: parseInt(radius),
       max_bid: parseFloat(maxBid),
+      shipping_available: shippingAvailable,
       is_active: true,
     };
 
@@ -104,9 +106,6 @@ export default function Dashboard() {
           <Radio className="text-sky-600 animate-pulse" size={28} />
           <h1 className="text-2xl font-bold tracking-tight">
             It&apos;s not stolen 🐦‍⬛
-            <span className="text-xs bg-sky-500/20 text-sky-600 px-2 py-0.5 rounded-full font-normal">
-              Give me your shiny things
-            </span>
           </h1>
         </div>
         <div className="text-sm text-slate-600 flex items-center gap-2">
@@ -120,7 +119,7 @@ export default function Dashboard() {
         <div className="space-y-6 lg:col-span-1">
           <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl p-5 shadow-xl">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Bell size={18} className="text-sky-600" /> Find Shiny Things
+              <Bird size={18} className="text-sky-600" /> Find Shiny Things
             </h2>
             <form onSubmit={handleAddRadar} className="space-y-4">
               <div>
@@ -173,6 +172,18 @@ export default function Dashboard() {
                   className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500 text-slate-900"
                 />
               </div>
+              <div>
+                <label className="flex items-center gap-2 text-xs uppercase font-semibold text-slate-600 mb-1">
+                  <input
+                    type="checkbox"
+                    checked={shippingAvailable}
+                    onChange={(e) => setShippingAvailable(e.target.checked)}
+                    className="w-4 h-4 text-sky-600 border-slate-300 rounded focus:ring-sky-500"
+                  />
+                  Shipping Available
+                </label>
+              </div>
+
               <button
                 type="submit"
                 disabled={loading}

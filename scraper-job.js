@@ -14,15 +14,14 @@ const supabase = createClient(
 );
 
 // Helper function to build target URLs
-function generateSearchUrl(keyword, zipCode, radius) {
-  //https://www.auctionninja.com/category/sports-memorabilia-ephemera?keyword=baseball&miles=30&zip=01602&state=Massachusetts
+function generateSearchUrl(keyword, zipCode, radius, shippingAvailable) {
   // Target the clean frontend directory instead of the .php backend action file
-  const baseUrl =
-    "https://www.auctionninja.com/category/sports-memorabilia-ephemera";
+  //https://www.auctionninja.com/search_mid.php?keyword=baseball+cards&srt=&miles=30&zip=01602&auc_date=&shipopt1=&shipopt2=&seller=&cat=&subcat=&view=20&kwords=&state=Massachusetts
+  const baseUrl = "https://www.auctionninja.com/search_mid.php";
   const encodedKeyword = encodeURIComponent(keyword);
 
   // Exact structural query strings for the marketplace search query engine
-  return `${baseUrl}?keyword=${encodedKeyword}&zip=${zipCode}&miles=${radius}`;
+  return `${baseUrl}?keyword=${encodedKeyword}&zip=${zipCode}&miles=${radius}&shipopt1=${shippingAvailable ? "S" : ""}`;
 }
 
 async function run() {
