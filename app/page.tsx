@@ -7,7 +7,6 @@ import {
   MapPin,
   DollarSign,
   ExternalLink,
-  X,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -29,10 +28,10 @@ export default function Dashboard() {
       const radarData = await radarResponse.json();
       if (!radarData.error) setRadars(radarData);
 
-      // (Optional placeholder for matches once you create /api/matches route)
-      // const matchResponse = await fetch('/api/matches');
-      // const matchData = await matchResponse.json();
-      // if (!matchData.error) setMatches(matchData);
+      // Fetch matches from the database
+      const matchResponse = await fetch("/api/matches");
+      const matchData = await matchResponse.json();
+      if (!matchData.error) setMatches(matchData);
     } catch (err) {
       console.error("Error loading initial database layers:", err);
     }
@@ -98,20 +97,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 p-4 md:p-8 font-sans">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 text-slate-900 p-4 md:p-8 font-sans">
       {/* Header */}
-      <header className="max-w-6xl mx-auto mb-8 flex justify-between items-center border-b border-slate-800 pb-4">
+      <header className="max-w-6xl mx-auto mb-8 flex justify-between items-center border-b border-slate-200 pb-4">
         <div className="flex items-center gap-3">
-          <Radio className="text-emerald-400 animate-pulse" size={28} />
+          <Radio className="text-sky-600 animate-pulse" size={28} />
           <h1 className="text-2xl font-bold tracking-tight">
-            AN-Sniper{" "}
-            <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-normal">
-              Supabase Powered
+            It&apos;s not stolen 🐦‍⬛
+            <span className="text-xs bg-sky-500/20 text-sky-600 px-2 py-0.5 rounded-full font-normal">
+              Give me your shiny things
             </span>
           </h1>
         </div>
-        <div className="text-sm text-slate-400 flex items-center gap-2">
-          <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>{" "}
+        <div className="text-sm text-slate-600 flex items-center gap-2">
+          <span className="w-2 h-2 bg-sky-500 rounded-full animate-ping"></span>{" "}
           Sync Connected
         </div>
       </header>
@@ -119,13 +118,13 @@ export default function Dashboard() {
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Form Controls */}
         <div className="space-y-6 lg:col-span-1">
-          <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-5 shadow-xl">
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl p-5 shadow-xl">
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-              <Bell size={18} className="text-amber-400" /> Add Search Radar
+              <Bell size={18} className="text-sky-600" /> Find Shiny Things
             </h2>
             <form onSubmit={handleAddRadar} className="space-y-4">
               <div>
-                <label className="block text-xs uppercase font-semibold text-slate-400 mb-1">
+                <label className="block text-xs uppercase font-semibold text-slate-600 mb-1">
                   Keyword
                 </label>
                 <input
@@ -134,12 +133,12 @@ export default function Dashboard() {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   placeholder="e.g. Vintage Cards, Cast Iron..."
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500 text-slate-100"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500 text-slate-900"
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-slate-400 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-slate-600 mb-1">
                     ZIP Code
                   </label>
                   <input
@@ -148,46 +147,46 @@ export default function Dashboard() {
                     value={zip}
                     onChange={(e) => setZip(e.target.value)}
                     placeholder="01604"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500 text-slate-100"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500 text-slate-900"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs uppercase font-semibold text-slate-400 mb-1">
+                  <label className="block text-xs uppercase font-semibold text-slate-600 mb-1">
                     Radius (mi)
                   </label>
                   <input
                     type="number"
                     value={radius}
                     onChange={(e) => setRadius(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500 text-slate-100"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500 text-slate-900"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-xs uppercase font-semibold text-slate-400 mb-1">
+                <label className="block text-xs uppercase font-semibold text-slate-600 mb-1">
                   Max Bid Price ($)
                 </label>
                 <input
                   type="number"
                   value={maxBid}
                   onChange={(e) => setMaxBid(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-500 text-slate-100"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-sky-500 text-slate-900"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:bg-slate-700 transition-colors py-2 rounded-lg font-medium text-sm mt-2"
+                className="w-full bg-sky-600 hover:bg-sky-500 disabled:bg-slate-300 transition-colors py-2 rounded-lg font-medium text-sm mt-2 text-white"
               >
-                {loading ? "Activating Target..." : "Activate Radar"}
+                {loading ? "Finding Shiny Things..." : "Caw!"}
               </button>
             </form>
           </div>
 
           {/* Active Radars List from DB */}
-          <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-5">
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">
-              Active Radars ({radars.length})
+          <div className="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-xl p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-600 mb-3">
+              Shiny lists ({radars.length})
             </h3>
             <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
               {radars.length === 0 ? (
@@ -198,11 +197,11 @@ export default function Dashboard() {
                 radars.map((r: any) => (
                   <div
                     key={r.id}
-                    className="bg-slate-900 border border-slate-700 p-3 rounded-lg flex justify-between items-center"
+                    className="bg-slate-50 border border-slate-200 p-3 rounded-lg flex justify-between items-center"
                   >
                     <div>
                       <p className="font-medium text-sm">{r.keyword}</p>
-                      <div className="flex gap-3 text-xs text-slate-400 mt-1">
+                      <div className="flex gap-3 text-xs text-slate-600 mt-1">
                         <span className="flex items-center gap-0.5">
                           <MapPin size={12} /> {r.zip} (+{r.radius}m)
                         </span>
@@ -213,7 +212,7 @@ export default function Dashboard() {
                     </div>
                     <button
                       onClick={() => handleDeleteRadar(r.id)}
-                      className="text-slate-500 hover:text-red-400 transition-colors p-1"
+                      className="text-slate-500 hover:text-red-500 transition-colors p-1"
                     >
                       <Trash2 size={16} />
                     </button>
@@ -227,10 +226,10 @@ export default function Dashboard() {
         {/* Right Column: Target Snipe Queue */}
         <div className="lg:col-span-2 space-y-4">
           <h2 className="text-lg font-semibold flex items-center gap-2 px-1">
-            🎯 Target Snipe Queue ({matches.length})
+            Queue ({matches.length})
           </h2>
           {matches.length === 0 ? (
-            <div className="border border-dashed border-slate-700 rounded-xl p-12 text-center text-slate-500 text-sm bg-slate-850/20">
+            <div className="border border-dashed border-slate-300 rounded-xl p-12 text-center text-slate-500 text-sm bg-slate-50/50">
               Your queue is currently clear. Once your GitHub Actions worker
               runs its scraping loop, matches under your criteria will populate
               here instantly.
@@ -240,7 +239,7 @@ export default function Dashboard() {
               {matches.map((item: any) => (
                 <div
                   key={item.id}
-                  className="bg-slate-800/60 border border-slate-700 rounded-xl overflow-hidden shadow-lg flex flex-col justify-between"
+                  className="bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl overflow-hidden shadow-lg flex flex-col justify-between"
                 >
                   <div className="p-4 flex gap-4">
                     <img
@@ -249,23 +248,23 @@ export default function Dashboard() {
                         "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=150"
                       }
                       alt={item.title}
-                      className="w-20 h-20 object-cover rounded-lg bg-slate-700 flex-shrink-0"
+                      className="w-20 h-20 object-cover rounded-lg bg-slate-100 flex-shrink-0"
                     />
                     <div className="space-y-1">
                       <h4 className="font-semibold text-sm line-clamp-2 pt-1">
                         {item.title}
                       </h4>
-                      <p className="text-xs text-rose-400 font-medium">
+                      <p className="text-xs text-slate-600 font-medium">
                         {item.end_time}
                       </p>
                     </div>
                   </div>
-                  <div className="bg-slate-900/80 px-4 py-3 border-t border-slate-700 flex items-center justify-between">
+                  <div className="bg-slate-100/80 px-4 py-3 border-t border-slate-200 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-slate-400 block uppercase font-medium">
+                      <span className="text-[10px] text-slate-600 block uppercase font-medium">
                         Current Bid
                       </span>
-                      <span className="text-lg font-bold text-emerald-400">
+                      <span className="text-lg font-bold text-sky-600">
                         ${item.current_bid.toFixed(2)}
                       </span>
                     </div>
@@ -274,7 +273,7 @@ export default function Dashboard() {
                         href={item.link}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded-lg transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white font-medium text-xs rounded-lg transition-colors"
                       >
                         Bid <ExternalLink size={12} />
                       </a>
